@@ -1,10 +1,4 @@
-package com.universidade.gerenciamentopessoas.dto;
+package dto;
 
-import lombok.Data;
-
-@Data
-public class PessoaDTO {
-    private String nome;
-    private String cpf;
-    private Integer idade;
+public record PessoaDto(String nome, String cpf, Integer idade) {
 }
