@@ -14,24 +14,25 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/pessoas")
 public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
 
-    @PostMapping("/pessoas")
+    @PostMapping
     public ResponseEntity<PessoaModel> createPessoa(@RequestBody PessoaDto pessoaDto){
         PessoaModel savedPessoa = pessoaService.createPessoa(pessoaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPessoa);
     }
 
-    @GetMapping("/pessoas/rafael")
+    @GetMapping("/rafael")
     public ResponseEntity<List<PessoaModel>> getRafaelsMaiorDeIdade() {
         List<PessoaModel> pessoas = pessoaService.buscarRafaelsMaioresDeIdade();
         return ResponseEntity.ok(pessoas);
     }
     
-    @GetMapping("/pessoas/buscar")
+    @GetMapping("/buscar")
     public ResponseEntity<List<PessoaModel>> buscarPorNomeEIdade(
             @RequestParam String nome,
             @RequestParam Integer idade
@@ -45,13 +46,13 @@ public class PessoaController {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/pessoas")
-    public ResponseEntity<List<PessoaModel>> getAllPessoas(){
+    @GetMapping("/")
+    public ResponseEntity<List<PessoaModel>> getAllPessoas() {
         List<PessoaModel> allPessoa = pessoaService.getAllPessoas();
         return ResponseEntity.status(HttpStatus.OK).body(allPessoa);
     }
 
-    @GetMapping("/pessoas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getPessoaModelById(@PathVariable UUID id){
         Optional<PessoaModel> foundPessoaModel = pessoaService.getPessoaModelById(id);
 
@@ -61,7 +62,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(foundPessoaModel.get());
     }
 
-    @DeleteMapping("/pessoas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePessoaModelById(@PathVariable UUID id){
         Optional<PessoaModel> foundPessoaModel = pessoaService.getPessoaModelById(id);
         if(foundPessoaModel.isEmpty()){
@@ -71,7 +72,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada com sucesso!!!");
     }
 
-    @PutMapping("/pessoas/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updatePessoaModelById(@RequestBody PessoaDto pessoaDto, @PathVariable UUID id){
         try {
             PessoaModel updatedPessoa = pessoaService.updatePessoaModelById(id, pessoaDto);

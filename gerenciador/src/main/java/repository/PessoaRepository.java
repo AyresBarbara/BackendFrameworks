@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface PessoaRepository extends JpaRepository<PessoaModel, UUID> {
-
     List<PessoaModel> findByNomeStartingWithAndIdadeGreaterThan(String nome, Integer idade);
-
+    List<PessoaModel> findByNome(String nome);
 }
+
